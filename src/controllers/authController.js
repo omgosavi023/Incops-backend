@@ -2,6 +2,15 @@ const bcrypt = require('bcryptjs');  // For hashing passwords
 const jwt = require('jsonwebtoken'); // For creating/verifying tokens
 
 // Temporary "database" - will replace with real DB later
+const User = require('../models/User'); // Import the model
+
+// Inside register function:
+const existingUser = await User.findOne({ email }); // Find in DB
+if (existingUser) return res.status(409).json({ error: 'User already exists' });
+
+const newUser = new User({ username, email, password: hashedPassword });
+await newUser.save(); // Save to DB
+
 let users = [
     {
         id: 1,

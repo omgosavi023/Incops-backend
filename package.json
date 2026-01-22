@@ -4,6 +4,8 @@
   "description": "Backend for Project INCOPs - Secure DevSecOps Pipeline",
   "main": "src/server.js",
   "scripts": {
+    "predev": "fuser -k 3001/tcp || true",
+    "dev": "nodemon src/server.js",
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,8 +14,9 @@
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "jsonwebtoken": "^9.0.2"
+    "express": "^4.22.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^9.1.5"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"

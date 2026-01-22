@@ -35,7 +35,7 @@ const verifyToken = (req, res, next) => {
     
     try {
         // Verify token with secret key
-        const verified = jwt.verify(token, process.env.JWT_SECRET || 'incops-dev-secret');
+        const verified = jwt.verify(token, process.env.JWT_SECRET);
         
         // Attach user data to request object
         req.user = verified;

@@ -1,20 +1,14 @@
-# Use official Node.js runtime as base image
+
 FROM node:18-alpine
 
-# Set working directory in container
-WORKDIR /usr/src/app
+# Security: Run as a non-privileged user
+USER node 
+WORKDIR /home/node/app
 
-# Copy package files
-COPY package*.json ./
-
-# Install dependencies
+COPY --chown=node:node package*.json ./
 RUN npm ci --only=production
 
-# Copy application code
-COPY . .
+COPY --chown=node:node . .
 
-# Expose port
 EXPOSE 3001
-
-# Start the application
 CMD ["npm", "start"]

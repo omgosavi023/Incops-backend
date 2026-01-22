@@ -1,3 +1,4 @@
+
 // IMPORTANT: Use bcryptjs (not bcrypt) if you're having issues
 const express = require('express');
 const cors = require('cors');
@@ -11,6 +12,22 @@ const { verifyToken, requireRole } = require('./middleware/authMiddleware');
 // Load environment variables
 dotenv.config();
 
+
+//Adding path to the fronend files in folder /incops-backend/public
+
+//const path = require('path'); 
+
+// Serve static files from the 'public' folder
+// Note: If your public folder is in the root, use './public'
+//app.use(express.static(path.join(__dirname, '/home/kali/Incops-Project/Incops-backend/public')));
+
+// Route to serve the main frontend page
+//app.get('/', (req, res) => {
+  //  res.sendFile(path.join(__dirname, '/home/kali/Incops-Project/Incops-backend/public/index.html'));
+//});
+
+
+
 // Initialize Express app
 const app = express();
 
@@ -18,6 +35,21 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+
+const path = require('path'); 
+
+// Serve static files from the 'public' folder
+// Note: If your public folder is in the root, use './public'
+app.use(express.static(path.join(__dirname, '/home/kali/Incops-Project/Incops-backend/public')));
+
+// Route to serve the main frontend page
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '/home/kali/Incops-Project/Incops-backend/public/index.html'));
+});
+
+
+
 
 // Health check route
 app.get('/api/health', (req, res) => {
@@ -29,6 +61,21 @@ app.get('/api/health', (req, res) => {
 });
 
 // Temporary "database" - in-memory users
+
+const mongoose = require('mongoose');
+
+// Connect to MongoDB
+const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/incops';
+mongoose.connect(mongoURI)
+    .then(() => console.log('📦 Connected to MongoDB'))
+    .catch(err => console.error('❌ MongoDB connection error:', err));
+
+
+
+
+
+
+
 const users = [
     {
         id: 1,
@@ -191,4 +238,8 @@ app.listen(PORT, () => {
     console.log(`📝 Health check: http://localhost:${PORT}/api/health`);
     console.log(`🔐 Login endpoint: POST http://localhost:${PORT}/api/login`);
     console.log(`👤 Test credentials: admin@incops.dev / password123`);
+    console.log(` Visit http://192.168.10.140:8080`);
+
+
+
 });
